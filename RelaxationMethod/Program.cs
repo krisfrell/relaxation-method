@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using System.Collections.Concurrent;
 
 namespace RelaxationMethod
@@ -57,13 +57,20 @@ namespace RelaxationMethod
             public void generateMatrix(int n)
             {
                 double[,] matrix = new double[n, n];
-                Random random = new Random();
+                Random random = new Random(Guid.NewGuid().GetHashCode());
                 for (int i = 0; i < n; i++)
                 {
                     for (int j = 0; j < n; j++)
                     {
-                        int randInt = random.Next(1, 5);
-                        matrix[i, j] = randInt * random.NextDouble();
+                        if (i == j)
+                        {
+                            double sample = random.NextDouble();
+                            matrix[i, j] = (2 * n * sample) + (n * (1d - sample));
+                        } else
+                        {
+                            double sample = random.NextDouble();
+                            matrix[i, j] = (1 * sample) + (0 * (1d - sample));
+                        }
                     }
                 }
 
